@@ -1,4 +1,9 @@
 import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import MinMaxScaler
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
 
 file_path = 'dataset/eurovision.csv'
 df = pd.read_csv(file_path)
@@ -57,12 +62,6 @@ pd.set_option('display.max_rows', None)
 # Display potential vote abusers
 print(abusers)
 
-import pandas as pd
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import MinMaxScaler
-import seaborn as sns
-import matplotlib.pyplot as plt
-
 # Izveido balsu matricu
 vote_matrix = df.pivot_table(index='From country', columns='To country', values='Points', aggfunc='sum', fill_value=0)
 
@@ -103,10 +102,6 @@ print(cluster_results.sort_values('Cluster'))
 for cluster in range(7):
     members = cluster_results[cluster_results['Cluster'] == cluster]['From country']
     print(f"Klasteris {cluster}: {', '.join(members)}")
-
-
-from sklearn.decomposition import PCA
-import matplotlib.pyplot as plt
 
 # Veic PCA, lai samazinātu dimensiju skaitu uz 2
 pca = PCA(n_components=2)
